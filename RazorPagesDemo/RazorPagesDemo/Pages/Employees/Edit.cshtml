@@ -1,0 +1,87 @@
+﻿@page  "{id:min(1)?}/{handler?}"
+@using RazorPagesDemo.Models
+@model RazorPagesDemo.Pages.Employees.EditModel
+@{
+    ViewData["Title"] = Model.Employee.Id > 0 ? "Edit" : "Create";
+    var photoPath = "~/images/" + (Model.Employee.PhotoPath ?? "noimage.png");
+}
+
+<h1 class="mt-4 mb-4">Notification Preferences</h1>
+<form method="post" asp-page-handler="UpdateNotificationPreferences" class="mt-3">
+    <div class="form-group">
+        <label class="my-checkbox-container">
+            <input asp-for="Notify" type="checkbox">
+            <span class="my-checkmark"></span>
+            <label class="my-checkbox-label" asp-for="Notify"></label>
+        </label>
+    </div>
+    <button type="submit" class="btn btn-primary">
+        Update Notification Preferences
+    </button>
+</form>
+
+<hr />
+
+<h1 class="mt-4 mb-4">@(Model.Employee.Id > 0 ? "Edit" : "Create")</h1>
+<form method="post" asp-page-handler="OnPost" enctype="multipart/form-data" class="mt-3">
+    <div asp-validation-summary="All" class="text-danger"></div>
+    <input type="hidden" asp-for="Employee.Id" />
+    <input type="hidden" asp-for="Employee.PhotoPath" />
+
+    <div class="form-group row">
+        <label asp-for="Employee.Name" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="Employee.Name" class="form-control" placeholder="Name">
+            <span asp-validation-for="Employee.Name" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label asp-for="Employee.Email" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <input asp-for="Employee.Email" class="form-control" placeholder="Email">
+            <span asp-validation-for="Employee.Email" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label asp-for="Employee.Department" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <select asp-for="Employee.Department" class="custom-select mr-sm-2" asp-items="Html.GetEnumSelectList<Dept>()">
+                <option value="">(Select Department)</option>
+            </select>
+            <span asp-validation-for="Employee.Department" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label asp-for="Photo" class="col-sm-2 col-form-label"></label>
+        <div class="col-sm-10">
+            <div style="display: flex">
+                <div style="flex: 1 0 auto">
+                    <input disabled type="text" style="border-radius: 0.25rem 0 0 0.25rem" class="form-control" placeholder="Change Photo...">
+                    <input asp-for="Photo" type="file" multiple style="border-radius: 0.25rem 0 0 0.25rem; position: absolute; top: 0; left: calc(15px + 0.75rem); z-index: -1; opacity: 0">
+                </div>
+                <div style="flex: 0 0 75px">
+                    <button style="border-radius: 0 0.25rem 0.25rem 0; width: 100%" type="button" class="btn btn-primary">Browse</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row col-sm-4 offset-4">
+        <img class="image-thumbnail" src="@photoPath" asp-append-version="true" />
+    </div>
+
+    <div class="form-group row">
+        <div class="col-sm-10">
+            <button type="submit" class="btn btn-primary">@(Model.Employee.Id > 0 ? "Save" : "Add")</button>
+            <a asp-page="/Employees/Index" class="btn btn-primary">Cancel</a>
+        </div>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
