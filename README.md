@@ -12,6 +12,7 @@ The purpose of this project is to present my knowledge of Razor Pages to anybody
 * Example of using raw `SQL` and `Stored Procedures` with `EF Core`
 * `TempData` example
 * Parameterized `Partial Views`
+* Simple Search Engine
 * File upload, custom error handling, validation, tag helpers, repository pattern and an example of alternative approach for creating CRUD Pages by using Scaffolding feature
 
 ![1](/Images/2020-02-23_212457.png?raw=true)
